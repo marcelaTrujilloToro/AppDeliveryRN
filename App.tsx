@@ -1,58 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HomeScreen } from './src/views/home/Home';
+import { RegisterScreen } from './src/views/register/Register';
 
-export default function App() {
+export type RootStackParamsList = {
+  HomeScreen: undefined;
+  RegisterScreen: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamsList>();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.imageBackground}
-        source={require('./assets/chef.jpg')}
-      />
-
-      <View style={styles.logoContainer}>
-        <Image source={require('./assets/logo.png')} style={styles.logoImage} />
-        <Text style={styles.logoText}>FOOD APP</Text>
-      </View>
-
-      <View style={styles.form}></View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name='HomeScreen' component={HomeScreen} />
+        <Stack.Screen
+          name='RegisterScreen'
+          component={RegisterScreen}
+          options={{
+            headerShown: true,
+            title: 'REGISTER',
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
-  imageBackground: {
-    width: '100%',
-    height: '100%',
-    opacity: 0.7,
-    bottom: '30%',
-  },
-  form: {
-    width: '100%',
-    height: '40%',
-    backgroundColor: '#fff',
-    position: 'absolute',
-    bottom: 0,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-  },
-  logoContainer: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: '15%',
-  },
-  logoImage: {
-    width: 100,
-    height: 100,
-  },
-  logoText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 20,
-    marginTop: 10,
-    fontWeight: 'bold',
-  },
-});
+export default App;
