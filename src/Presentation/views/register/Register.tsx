@@ -7,10 +7,10 @@ import styles from './Styles';
 
 export const RegisterScreen = () => {
   const {
-    firstName,
+    name,
     lastName,
     email,
-    phoneNumber,
+    phone,
     password,
     confirmPassword,
     onChange,
@@ -37,10 +37,10 @@ export const RegisterScreen = () => {
 
         <CustomTextInput
           icon={require('../../../../assets/user.png')}
-          value={firstName}
+          value={name}
           placeholder={'First name'}
           keyboardType={'default'}
-          property={'firstName'}
+          property={'name'}
           onChange={onChange}
         />
 
@@ -64,10 +64,10 @@ export const RegisterScreen = () => {
 
         <CustomTextInput
           icon={require('../../../../assets/phone.png')}
-          value={phoneNumber}
+          value={phone}
           placeholder={'Phon number'}
           keyboardType={'default'}
-          property={'phoneNumber'}
+          property={'phone'}
           onChange={onChange}
         />
         <CustomTextInput
