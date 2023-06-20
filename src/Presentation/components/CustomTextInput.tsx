@@ -24,6 +24,7 @@ export const CustomTextInput = ({
     <View style={styles.formInput}>
       <Image source={icon} style={styles.formIcon} />
       <TextInput
+        autoCapitalize='none'
         placeholder={placeholder}
         style={styles.formTextInput}
         keyboardType={keyboardType}
