@@ -2,22 +2,29 @@ import React, { useEffect } from 'react';
 import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import { RoundedButton } from '../../components/RoundedButton';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamsList } from '../../../../App';
 import useViewModel from './ViewModel';
 import { CustomTextInput } from '../../components/CustomTextInput';
 import styles from './Styles';
 
-export const HomeScreen = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
+interface Props extends StackScreenProps<RootStackParamsList, 'HomeScreen'> {}
 
-  const { email, password, onChange, login, errorMessage } = useViewModel();
+export const HomeScreen = ({ navigation }: Props) => {
+  const { email, password, onChange, login, errorMessage, user } =
+    useViewModel();
 
   useEffect(() => {
     if (errorMessage !== '') {
       Alert.alert(errorMessage);
     }
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (user?.id !== null && user?.id !== undefined) {
+      navigation.replace('ProfileInfoScreen');
+    }
+  }, [user]);
 
   return (
     <View style={styles.container}>
