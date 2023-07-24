@@ -1,11 +1,21 @@
-import React, { useEffect } from 'react';
-import { Alert, Image, ScrollView, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { RoundedButton } from '../../components/RoundedButton';
 import { CustomTextInput } from '../../components/CustomTextInput';
 import useViewModel from './ViewModel';
 import styles from './Styles';
+import { ModalPickImage } from '../../components/ModalPickImage';
 
 export const RegisterScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const {
     name,
     lastName,
@@ -16,6 +26,9 @@ export const RegisterScreen = () => {
     onChange,
     register,
     errorMessage,
+    pickImage,
+    image,
+    takePhoto,
   } = useViewModel();
 
   useEffect(() => {
@@ -32,10 +45,16 @@ export const RegisterScreen = () => {
       />
 
       <View style={styles.logoContainer}>
-        <Image
-          source={require('../../../../assets/user_image.png')}
-          style={styles.logoImage}
-        />
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          {image === '' ? (
+            <Image
+              source={require('../../../../assets/user_image.png')}
+              style={styles.logoImage}
+            />
+          ) : (
+            <Image source={{ uri: image }} style={styles.logoImage} />
+          )}
+        </TouchableOpacity>
         <Text style={styles.logoText}>CHOOSE AN IMAGE</Text>
       </View>
 
@@ -102,6 +121,12 @@ export const RegisterScreen = () => {
           </View>
         </ScrollView>
       </View>
+      <ModalPickImage
+        openModal={modalVisible}
+        openGallery={pickImage}
+        openCamera={takePhoto}
+        handleModal={setModalVisible}
+      />
     </View>
   );
 };
